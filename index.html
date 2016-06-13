@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <style>
+  #canvas{
+    border: 1px solid black;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  </style>
+  <body>
+    <canvas id="canvas" width="600" height="600"></canvas>
+  </body>
+  <script>
+    var r=function(deg){
+      return Math.PI/180*deg;
+    }
+    window.onload = init;
+    function init() {
+
+      var ctx = document.getElementById('canvas').getContext('2d');
+      var img = new Image();
+      img.onload = function(){
+        ctx.drawImage(img,0,0);
+        ctx.beginPath();
+        ctx.save();
+        ctx.translate(300,300);
+        ctx.beginPath();
+        ctx.arc(0,0,5,0,r(360));
+        ctx.closePath();
+        ctx.fillStyle='white';
+        ctx.fill();
+        //秒针
+        var now=new Date()
+        var seconds=now.getSeconds(); //获取当前秒数
+        ctx.save();
+        ctx.beginPath();
+        ctx.rotate(r(seconds*6));
+        ctx.fillRect(0,5,2,105);
+        ctx.fillStyle='white';
+        ctx.fill();
+        // ctx.arc(0,0,5,0,r(360));
+        ctx.fillRect(0,-5,2,-120);
+        ctx.fillStyle='white';
+        ctx.fill();
+        ctx.arc(0,105,5,120,r(360));
+        ctx.fillStyle='white';
+        ctx.fill();
+        ctx.closePath();
+        ctx.restore();
+        //分针
+        var seconds=now.getSeconds();
+        var minutes=now.getMinutes();
+        var m=360*(minutes*60+seconds)/3600
+        ctx.save();
+        ctx.beginPath();
+        ctx.rotate(r(m));
+        ctx.fillRect(0,5,4,-25);
+        ctx.fillStyle='white';
+        ctx.fill();
+        ctx.fillRect(0,-5,4,-110);
+        ctx.fillStyle='white';
+        ctx.fill();
+        ctx.closePath();
+        ctx.restore();
+        //时针
+        var seconds=now.getSeconds();
+        var minutes=now.getMinutes();
+        var hours=now.getHours();
+        var h=360*(hours*60*60+minutes*60+seconds)/43200
+        ctx.save();
+        ctx.beginPath();
+        ctx.rotate(r(h));
+        ctx.fillRect(0,5,4,-25);
+        ctx.fillStyle='white';
+        ctx.fill();
+        ctx.fillRect(0,-5,4,-80);
+        ctx.fillStyle='white';
+        ctx.fill();
+        ctx.closePath();
+        ctx.restore();
+        ctx.restore();
+
+      }
+      img.src = '1.jpg';
+    }
+
+  init();
+  setInterval(init,1);
+
+  // var r=function(deg){
+  //   return Math.PI/180*deg;
+  // }
+  // ctx.save();
+  // ctx.translate(300,300);
+  // ctx.beginPath();
+  // ctx.arc(0,0,5,0,r(360));
+  // ctx.closePath();
+  // ctx.stroke();
+  // ctx.fillStyle='red';
+  // ctx.fill();
+  // ctx.restore();
+  // var img=new Image();
+  // img.src='1.jpg';
+  // ctx.drawImage(img,0,0);
+  // ctx.strokeRect(0,0,600,600);
+  // ctx.fillStyle=img;
+  // ctx.fill();
+  </script>
+</html>
